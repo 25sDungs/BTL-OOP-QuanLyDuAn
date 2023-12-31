@@ -8,8 +8,8 @@ import java.util.List;
 public abstract class NhanVien extends ThongTinConNguoi {
 
     private static int dem = 0;
-    private int maNhanVien = ++dem;
-    private String email;
+    protected int maNhanVien = ++dem;
+    protected String email;
     private double luongCB;
     private double heSoLuong;
     private PhongBan phongBan;
