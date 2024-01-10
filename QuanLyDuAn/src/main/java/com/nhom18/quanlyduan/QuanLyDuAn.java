@@ -26,7 +26,9 @@ public class QuanLyDuAn {
     public void themDuAn(QuanLyNhanVien ql) {
         DuAn a = new DuAn();
         a.setTenDuAn();
+        System.out.print("Ngay bat dau du an:\n");
         a.setBatDau(CAUHINH.NHAP_NGAY_THANG_NAM());
+        System.out.print("Ngay ket thuc du an:\n");
         a.setKetThuc(CAUHINH.NHAP_NGAY_THANG_NAM());
         a.setKinhPhi();
         a.setChuNhiem(ql);
@@ -37,14 +39,16 @@ public class QuanLyDuAn {
     public void xoaDuAn(int kw) {
         DuAn duAn = this.timDuAn(kw);
         if (duAn != null) {
-            this.dsDuAn.remove(duAn);
-            duAn.setNvThamGia(null);
-            duAn.getNvThamGia().stream().forEach(nv -> {
-                nv.xoaDsDuAn(duAn);
-
-            });
             duAn.getNguoiChuNhiem().xoaChuNhiem(duAn);
-        }
+
+            for (NhanVien nv : duAn.getNvThamGia()) {
+                nv.xoaDsDuAn(duAn);
+            }
+            duAn.setNvThamGia(null);
+            this.dsDuAn.remove(duAn);
+
+        };
+
     }
 
     public void suaDuAn(DuAn a) {
@@ -53,7 +57,7 @@ public class QuanLyDuAn {
             flag = 0;
             System.out.printf("Nhap lai cac thong tin du an %d: \n1. Sua ten du an\n2. Sua ngay bat dau\n"
                     + "3. Sua ngay ket thuc\n4. Sua kinh phi\n5. Hoan thanh sua\nChon thong tin can sua: ", a.getMaDuAn());
-            switch (CAUHINH.SC.nextLine()){
+            switch (CAUHINH.SC.nextLine()) {
                 case "1": {
                     a.setTenDuAn();
                     break;
@@ -98,8 +102,8 @@ public class QuanLyDuAn {
                 }
 
                 case "2": {
-                    System.out.print("=== TIM THEO NGAY ===\nNhap ngay cua du an: ");
-                    int ngay = Integer.parseInt(CAUHINH.SC.nextLine());
+                    System.out.print("=== TIM THEO NGAY ===\nNhap ngay bat dau cua du an:\n");
+                    LocalDate ngay = CAUHINH.NHAP_NGAY_THANG_NAM();
                     timDuAn(ngay);
                     break;
                 }
@@ -121,7 +125,9 @@ public class QuanLyDuAn {
     }
 
     public void timDuAn(LocalDate kw) {
-        List<DuAn> kq = this.dsDuAn.stream().filter(duAn -> duAn.getBatDau().isEqual(kw) || duAn.getKetThuc().isEqual(kw)).collect(Collectors.toList());
+        List<DuAn> kq =  dsDuAn.stream()
+                .filter(duAn -> duAn.getBatDau().equals(kw))
+                .collect(Collectors.toList());
         kq.forEach(h -> h.hienThi());
     }
 

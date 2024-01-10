@@ -75,6 +75,7 @@ public abstract class NhanVien extends ThongTinConNguoi {
             System.out.print("Khong co thong tin than nhan cua nhan vien!\n");
             return;
         }
+        System.out.print("*** DANH SACH NHAN THAN ***\n");
         this.getDsThanNhan().forEach(h -> h.hienThi());
     }
 
@@ -206,8 +207,28 @@ public abstract class NhanVien extends ThongTinConNguoi {
         return phongBan;
     }
 
+    public void setPhongBan() {
+
+    }
+
+    public void setPhongBan(QuanLyPhongBan ql) {
+        System.out.print("Nhap ten ban: ");
+        PhongBan pb = ql.timPhongBan(CAUHINH.SC.nextLine());
+        while (pb == null) {
+            System.out.print("Khong tim thay ban\nNhap lai ten ban: ");
+            pb = ql.timPhongBan(CAUHINH.SC.nextLine());
+        }
+        setPhongBan(pb);
+    }
+
     public void setPhongBan(PhongBan ban) {
+
+        if (this.phongBan != null) {
+            System.out.print("Nhan vien da tham gia 1 ban!\n");
+            return;
+        }
         this.phongBan = ban;
+        ban.setDsnv(this);
     }
 
     /**

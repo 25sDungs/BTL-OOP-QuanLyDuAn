@@ -16,7 +16,7 @@ import java.util.Scanner;
  */
 public class CAUHINH {
 
-    public static final String PATTERN = "dd/MM/yyy";
+    public static final String PATTERN = "dd/MM/yyyy";
     public static final Scanner SC = new Scanner(System.in);
 
     public static int NHAP_NGAY() {
@@ -93,6 +93,7 @@ public class CAUHINH {
                             a = NHAP_NGAY();
                         }
                     }
+                    break;
                 }
 
                 case 1:
@@ -125,6 +126,6 @@ public class CAUHINH {
                 }
             }
         } while (flag == 1);
-        return LocalDate.parse(String.format("%02d, %02d, %04d", a, b, c), DateTimeFormatter.ofPattern(CAUHINH.PATTERN));
+        return LocalDate.parse(String.format("%02d/%02d/%04d", a, b, c), DateTimeFormatter.ofPattern(PATTERN));
     }
 }

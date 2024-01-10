@@ -10,7 +10,7 @@ public class PhongBan {
 
     private String tenPhongBan;
     private List<NhanVien> dsnv = new ArrayList<>();
-    private NhanVienKhac quanLy;
+    private NhanVienQuanLy quanLy;
 
     public PhongBan() {
 
@@ -28,23 +28,31 @@ public class PhongBan {
 
     public void hienThi() {
         System.out.printf("Ten ban: %s\nNguoi quan ly: \n", this.getTenPhongBan());
-        this.quanLy.hienThiTtCoBan();
-        System.out.print("Danh sach nhan vien tham gia: \n");
-        getDsnv().forEach(nv -> nv.hienThiTtCoBan());
+        if (this.quanLy != null) {
+            this.quanLy.hienThiTtCoBan();
+        } else {
+            System.out.print("Ban chua co quan ly\n");
+        }
+        System.out.print("***DANH SACH NHAN VIEN*** \n");
+        if (this.dsnv.isEmpty()) {
+            System.out.print("Ban chua co nhan vien\n");
+        } else {
+            getDsnv().forEach(nv -> nv.hienThiTtCoBan());
+        }
+
     }
 
     public void themBan(QuanLyNhanVien ql) {
         System.out.print("Ten cua phong ban: ");
         this.setTenPhongBan(CAUHINH.SC.nextLine());
-        this.themNhanVien(ql);
-        this.themQuanLy(ql);
+        System.out.print("Hoan thanh them ban\n");
 
     }
 
     public void themQuanLy(NhanVien nv) {
-        this.quanLy = new NhanVienKhac(nv);
+        this.quanLy = new NhanVienQuanLy(nv);
         quanLy.setNgayNhanChuc(LocalDate.parse("10/12/2020", DateTimeFormatter.ofPattern(CAUHINH.PATTERN)));
-        this.quanLy.setBanQL(this);
+        this.quanLy.getDsBanQL().add(this);
     }
 
     public void themQuanLy(QuanLyNhanVien ql) {
@@ -58,11 +66,12 @@ public class PhongBan {
 
                 if (nv != null) {
                     if (nv.getDsBanQL().size() < 2) {
-
-                        this.quanLy = new NhanVienKhac(nv);
+                        nv.setDsBanQL(this);
+                        this.quanLy = new NhanVienQuanLy(nv);
                         this.quanLy.setNgayNhanChuc();
-                        this.quanLy.setBanQL(this);
+                        this.quanLy.getDsBanQL().add(this);
                         flag = 1;
+                        return;
                     }
                     System.out.print("Nhan vien nay da quan ly 2 du an\n");
 
@@ -72,8 +81,13 @@ public class PhongBan {
 
     }
 
-    public void xoaQuanLy() {
-        this.quanLy = null;
+    public void xoaQuanLy(QuanLyNhanVien ql) {
+        if (this.quanLy != null) {
+            NhanVien nv = ql.timTheoMaNhanVien(quanLy.getMaNhanVien());
+            nv.xoaDsBanQL(this);
+            this.quanLy = null;
+        }
+
     }
 
     public void themNhanVien(QuanLyNhanVien ql) {
@@ -107,13 +121,13 @@ public class PhongBan {
         } while (flag == 0);
     }
 
-    public void xoaNhanVien(QuanLyNhanVien ql) {
+    public void xoaNhanVien(QuanLyNhanVien ql, QuanLyPhongBan qlBan) {
         System.out.print("Nhap ma nhan vien can xoa: ");
         NhanVien nv = ql.timTheoMaNhanVien(Integer.parseInt(CAUHINH.SC.nextLine()));
         if (nv != null) {
             if (nv.getPhongBan().getTenPhongBan() == this.getTenPhongBan()) {
                 this.dsnv.remove(nv);
-                nv.setPhongBan(null);
+                nv.setPhongBan(qlBan);
                 return;
             }
             System.out.print("Nhan vien khong co trong ban\n");
@@ -131,19 +145,6 @@ public class PhongBan {
 
     public void xoaNhanVien(NhanVien a) {
         this.getDsnv().remove(a);
-        a.setPhongBan(null);
-    }
-
-    public void xemDSNhanVien() {
-        System.out.printf("==========Danh Sach Nhan Vien Ban %s==========\n", this.getTenPhongBan());
-        if (this.getDsnv().isEmpty()) {
-            System.out.print("Khong co nhan vien trong ban!\n");
-            return;
-        }
-        System.out.print("Nhan vien quan ly:\n");
-        this.quanLy.hienThiTtCoBan();
-        System.out.print("Nhan vien tham gia:\n");
-        this.dsnv.forEach(h -> h.hienThiTtCoBan());
     }
 
     /**
@@ -175,6 +176,12 @@ public class PhongBan {
     }
 
     public void setDsnv(NhanVien nv) {
+        for (NhanVien a : dsnv) {
+            if (a.getMaNhanVien() == nv.getMaNhanVien()) {
+                System.out.print("Nhan vien nay da co trong ban!\n");
+                return;
+            }
+        }
         this.dsnv.add(nv);
     }
 }

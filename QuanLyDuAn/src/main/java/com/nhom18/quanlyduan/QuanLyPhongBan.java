@@ -21,14 +21,48 @@ public class QuanLyPhongBan {
         this.ds.addAll(Arrays.asList(a));
     }
 
-    public void xoaPhongBan(String kw) {
+    public void chinhSuaQuanLy(QuanLyNhanVien ql) {
+        System.out.print("Nhap ten ban can chinh sua: ");
+        PhongBan pb = this.timPhongBan(CAUHINH.SC.nextLine());
+        if (pb != null) {
+            int flag = 0;
+            do {
+                System.out.print("== CHINH SUA QUAN LY ==\n1. Them quam ly\n2. Xoa quan ly\n3. Hoan thanh chinh sua\nChon chuc nang: ");
+                switch (CAUHINH.SC.nextLine()) {
+                    case "1": {
+                        System.out.print(">Them quan ly:\n");
+                        pb.themQuanLy(ql);
+                        break;
+                    }
+                    case "2":{
+                        System.out.print(">Xoa quan ly:\n");
+                        pb.xoaQuanLy(ql);
+                    }
+                    case "3":{
+                        System.out.print("Hoan thanh chinh sua\n");
+                        flag = 1;
+                        break;
+                    }
+                    default:{
+                        System.out.print("Khong co chuc nang ma ban chon!\n");
+                        break;
+                    }
+                }
+            } while (flag == 0);
+        }
+
+    }
+
+    public void xoaPhongBan(String kw, QuanLyNhanVien ql) {
         PhongBan pb = this.timPhongBan(kw);
-        if(pb != null){
-            pb.xoaQuanLy();
-            for(NhanVien nv: pb.getDsnv()){
-                pb.xoaNhanVien(nv);
-            }
+        if (pb != null) {
+            pb.xoaQuanLy(ql);
             ds.remove(pb);
+            for (NhanVien nv : pb.getDsnv()) {
+                System.out.print("Nhap ban moi cho nhan vien\n");
+                nv.setPhongBan(this);
+            }
+            
         }
 
     }

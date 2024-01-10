@@ -66,7 +66,7 @@ public class DuAn {
             NhanVien a = ql.timTheoMaNhanVien(Integer.parseInt(CAUHINH.SC.nextLine()));
             if (a != null) {
                 if (a.getChuNhiemDuAn().size() == 3) {
-                    System.out.print("Nhan vien nay da chu nhiem du du an!\n");
+                    System.out.print("Nhan vien nay da chu nhiem 2 du an!\n");
                 } else {
                     this.nguoiChuNhiem = a;
                     a.setChuNhiem(this);
@@ -121,7 +121,7 @@ public class DuAn {
     public void suaThanhVien(QuanLyNhanVien ql) {
         int flag = 0;
         do {
-            System.out.print("== CAI DAT THANH VIEN ==\n1. Them thanh vien\n2. Xoa thanh vien\n3. Hoan thanh chinh sua\n>Chon chuc nang: ");
+            System.out.print("== CAI DAT THANH VIEN ==\n1. Them thanh vien\n2. Xoa thanh vien\n3. Hoan thanh cai dat\n>Chon chuc nang: ");
             switch (CAUHINH.SC.nextLine()) {
                 case "1": {
                     if (this.nvThamGia.size() == 10) {

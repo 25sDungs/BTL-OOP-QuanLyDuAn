@@ -24,7 +24,7 @@ public class QuanLyNhanVien {
 
     }
 
-    public void nhapNhanVien() {
+    public void nhapNhanVien(QuanLyPhongBan ql) {
         int flag = 0;
         do {
             flag = 0;
@@ -34,6 +34,7 @@ public class QuanLyNhanVien {
                     NhanVien a = new NhanVienThuong();
                     a.setChucVu(ChucVu.NHAN_VIEN_THUONG);
                     a.nhapttCoBan();
+                    a.setPhongBan(ql);
                     dsNhanVien.add(a);
                     break;
                 }
@@ -41,6 +42,7 @@ public class QuanLyNhanVien {
                     NhanVien a = new LapTrinhVien();
                     a.setChucVu(ChucVu.LAP_TRINH_VIEN);
                     a.nhapttCoBan();
+                    a.setPhongBan(ql);
                     dsNhanVien.add(a);
                     break;
                 }
@@ -48,6 +50,7 @@ public class QuanLyNhanVien {
                     NhanVien a = new ThietKeVien();
                     a.setChucVu(ChucVu.THIET_KE_VIEN);
                     a.nhapttCoBan();
+                    a.setPhongBan(ql);
                     dsNhanVien.add(a);
                     break;
                 }
@@ -56,6 +59,7 @@ public class QuanLyNhanVien {
                     NhanVien a = new KiemThuVien();
                     a.setChucVu(ChucVu.KIEM_THU_VIEN);
                     a.nhapttCoBan();
+                    a.setPhongBan(ql);
                     dsNhanVien.add(a);
                     break;
                 }
@@ -113,8 +117,8 @@ public class QuanLyNhanVien {
                 break;
             }
             case "4": {
-                System.out.print(">Tim theo ngay sinh\nNhap ngay sinh: ");
-                LocalDate ngay = LocalDate.parse(CAUHINH.SC.nextLine(), DateTimeFormatter.ofPattern(CAUHINH.PATTERN));
+                System.out.print(">Tim theo ngay sinh\nNhap ngay sinh:\n");
+                LocalDate ngay = CAUHINH.NHAP_NGAY_THANG_NAM();
                 timTheoNgaySinh(ngay);
                 break;
             }
@@ -224,7 +228,7 @@ public class QuanLyNhanVien {
         NhanVien a = timTheoMaNhanVien(Integer.parseInt(CAUHINH.SC.nextLine()));
         if (a != null) {
             int flag = 0;
-            System.out.print("Thong tin cu: \n");
+            System.out.print("Thong tin cua nhan vien: \n");
             a.hienThi();
             do {
                 System.out.print("1. Sua ten\n2. Sua ngay thang nam sinh\n3. Sua gioi tinh\n4. Sua luong\n5. Hoan thanh sua\nChon thong tin can sua: ");

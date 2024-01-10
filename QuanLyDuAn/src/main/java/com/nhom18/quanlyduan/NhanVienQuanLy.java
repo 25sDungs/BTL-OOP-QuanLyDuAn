@@ -1,56 +1,110 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.nhom18.quanlyduan;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NhanVienQuanLy extends NhanVien {
+/**
+ *
+ * @author ADMIN
+ */
+public class NhanVienQuanLy extends NhanVien{
 
-    private LocalDate ngayNhamChuc;
-    private List<PhongBan> dsBan = new ArrayList<>();
-
-    public NhanVienQuanLy() {
+    private NhanVien nvK;
+    private LocalDate ngayNhanChuc;
+    private List<PhongBan> dsBanQL = new ArrayList<>();
+    
+    public void setQL(NhanVien nv){
+        this.setMaNhanVien(nv.getMaNhanVien());
+        this.hoTen = nv.getHoTen();
+        this.gioiTinh = nv.getGioiTinh();
+        this.ngaySinh = nv.getNgaySinh();
+        this.setEmail(nv.getEmail());
+        this.setChucVu(nv.getChucVu());
     }
 
-    public NhanVienQuanLy(String hoTen, GioiTinh gioiTinh, LocalDate d, String email, ChucVu chucVu, LocalDate ngayNhamChuc, double luongCB, double heSo, PhongBan phongBan) {
-        super(hoTen, gioiTinh, d, email, chucVu, phongBan);
-        this.ngayNhamChuc = ngayNhamChuc;
-        this.luongCB = luongCB;
-        this.heSoLuong = heSo;
+    public NhanVienQuanLy(NhanVien nv) {
+        this.setMaNhanVien(nv.getMaNhanVien());
+        this.hoTen = nv.getHoTen();
+        this.gioiTinh = nv.getGioiTinh();
+        this.ngaySinh = nv.getNgaySinh();
+        this.setEmail(nv.getEmail());
+        this.setChucVu(nv.getChucVu());
+        
+    }
+    
+    public void hienThiNgayNhanChuc(){
+        
     }
 
+    public void setNgayNhanChuc() {
+        System.out.print("Nhap ngay nhan chuc quan ly:\n");
+        this.setNgayNhanChuc(CAUHINH.NHAP_NGAY_THANG_NAM());
+    }
+    
+    @Override
+    public void hienThiTtCoBan(){
+        super.hienThiTtCoBan();
+        System.out.printf("Ngay nhan chuc: %s\n", this.getNgayNhanChuc().format(DateTimeFormatter.ofPattern(CAUHINH.PATTERN)));
+    }
     
     @Override
     public double tinhLuong() {
-        return this.getHeSoLuong() * this.getLuongCB();
+        return this.getNvK().tinhLuong();
+    }
+
+    @Override
+    public void hienThi() {
+        super.hienThi();
+    }
+    
+
+    /**
+     * @return the nvK
+     */
+    public NhanVien getNvK() {
+        return nvK;
     }
 
     /**
-     * @return the ngayNhamChuc
+     * @param nvK the nvK to set
      */
-    public LocalDate getNgayNhamChuc() {
-        return ngayNhamChuc;
+    public void setNvK(NhanVien nvK) {
+        this.nvK = nvK;
+
     }
 
     /**
-     * @param ngayNhamChuc the ngayNhamChuc to set
+     * @return the ngayNhanChuc
      */
-    public void setNgayNhamChuc(LocalDate ngayNhamChuc) {
-        this.ngayNhamChuc = ngayNhamChuc;
+    public LocalDate getNgayNhanChuc() {
+        return ngayNhanChuc;
     }
 
     /**
-     * @return the ban
+     * @param ngayNhanChuc the ngayNhanChuc to set
      */
-    public List<PhongBan> getDSBan() {
-        return dsBan;
+    public void setNgayNhanChuc(LocalDate ngayNhanChuc) {
+        this.ngayNhanChuc = ngayNhanChuc;
     }
 
     /**
-     * @param ban the ban to set
+     * @return the dsBanQL
      */
-    public void setDSBan(List<PhongBan> ban) {
-        this.dsBan = dsBan;
+    public List<PhongBan> getDsBanQL() {
+        return dsBanQL;
+    }
+
+    /**
+     * @param dsBanQL the dsBanQL to set
+     */
+    public void setDsBanQL(List<PhongBan> dsBanQL) {
+        this.dsBanQL = dsBanQL;
     }
 
 }

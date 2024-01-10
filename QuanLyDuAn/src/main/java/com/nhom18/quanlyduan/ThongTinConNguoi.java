@@ -44,7 +44,7 @@ public abstract class ThongTinConNguoi {
     }
 
     public void setNgaySinh() {
-        
+        System.out.print("Ngay ngay thang nam sinh\n");
         this.setNgaySinh(CAUHINH.NHAP_NGAY_THANG_NAM());
     }
     
@@ -108,6 +108,6 @@ public abstract class ThongTinConNguoi {
         for (String word : words) {
             sua = sua.append(word.substring(0, 1).toUpperCase()).append(word.substring(1).toLowerCase()).append(" ");
         }
-        this.hoTen = sua.toString();
+        this.hoTen = sua.toString().trim();
     }
 }
